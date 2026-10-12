@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @layer base {
-  html { scroll-behavior: smooth; }
-  body { @apply bg-surface text-ink font-sans antialiased; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body { @apply bg-surface text-ink font-sans antialiased; overflow-x: clip; }
   :focus-visible { @apply outline-2 outline-offset-2 outline-brand; outline-style: solid; }
 }
 @layer components {

@@ -793,8 +793,8 @@ export default function EmployerRegisterWizard() {
   ];
 
   return (
-    <div className="bg-slate-50/70 py-10 min-h-[calc(100vh-64px)] selection:bg-blue-600 selection:text-white">
-      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+    <div className="bg-slate-50/70 py-10 min-h-[calc(100vh-64px)] selection:bg-blue-600 selection:text-white overflow-x-hidden">
+      <div className="container-x">
         {/* Enterprise Trust & MCA Audit Header */}
         <div className="mb-6 relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-950 via-slate-900 to-blue-950 p-6 sm:p-7 text-white shadow-2xl border border-slate-800/80">
           <div className="absolute right-0 top-0 -mt-10 -mr-10 h-64 w-64 rounded-full bg-blue-500/10 blur-3xl pointer-events-none" />
@@ -857,7 +857,7 @@ export default function EmployerRegisterWizard() {
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
               {stepMeta.map((s, idx) => {
                 const stepNum = idx + 1;
                 const isCurrent = currentStep === stepNum;

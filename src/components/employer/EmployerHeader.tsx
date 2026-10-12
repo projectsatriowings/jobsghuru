@@ -25,6 +25,7 @@ import { Flame, Database } from "lucide-react";
 
 export default function EmployerHeader() {
   const pathname = usePathname();
+  const isRegisterPage = pathname === "/employers/register";
   const [solutionsOpen, setSolutionsOpen] = useState(false);
   const [offeringsOpen, setOfferingsOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -42,6 +43,8 @@ export default function EmployerHeader() {
   } | null>(null);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const offeringsRef = useRef<HTMLDivElement>(null);
+  const solutionsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -62,15 +65,44 @@ export default function EmployerHeader() {
     };
   }, [pathname]);
 
-  // Click outside to close dropdown
+  // Close dropdowns on route changes
+  useEffect(() => {
+    setOfferingsOpen(false);
+    setSolutionsOpen(false);
+    setMobileMenuOpen(false);
+    setProfileDropdownOpen(false);
+  }, [pathname]);
+
+  // Click outside and ESC to close dropdowns
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      if (dropdownRef.current && !dropdownRef.current.contains(target)) {
         setProfileDropdownOpen(false);
       }
+      if (offeringsRef.current && !offeringsRef.current.contains(target)) {
+        setOfferingsOpen(false);
+      }
+      if (solutionsRef.current && !solutionsRef.current.contains(target)) {
+        setSolutionsOpen(false);
+      }
     }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setOfferingsOpen(false);
+        setSolutionsOpen(false);
+        setProfileDropdownOpen(false);
+        setMobileMenuOpen(false);
+      }
+    }
+
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   const handleLogout = async () => {
@@ -126,178 +158,196 @@ export default function EmployerHeader() {
             </div>
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden items-center gap-7 text-sm sm:text-base font-bold text-slate-800 lg:flex">
-            {/* Our Offerings Mega Dropdown (Naukri Screenshot 4 Equivalent) */}
-            <div
-              className="relative"
-              onMouseEnter={() => setOfferingsOpen(true)}
-              onMouseLeave={() => setOfferingsOpen(false)}
-            >
-              <button
-                type="button"
-                className={`flex items-center gap-1.5 py-2 text-sm sm:text-base font-bold transition hover:text-blue-600 ${
-                  offeringsOpen ? "text-blue-600" : "text-slate-800"
-                }`}
-              >
-                Our Offerings <ChevronDown size={16} className={`transition duration-200 ${offeringsOpen ? "rotate-180 text-blue-600" : ""}`} />
-              </button>
-
-              {offeringsOpen && (
-                <div className="absolute left-0 top-full pt-2 w-[560px]">
-                  <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl grid grid-cols-12 gap-5">
-                    {/* Left Card: Free Job Posting highlight */}
-                    <div className="col-span-5 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50/60 p-4 border border-blue-100 flex flex-col justify-between">
-                      <div>
-                        <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-700 bg-blue-100/80 px-2 py-0.5 rounded-md">
-                          Starter Privilege
-                        </span>
-                        <h4 className="mt-2 font-display text-sm font-bold text-slate-900 leading-snug">
-                          With Free Job Posting, hire local talent at zero cost
-                        </h4>
-                        <p className="mt-1.5 text-xs text-slate-500 leading-relaxed">
-                          Post verified jobs every month with up to 50 pre-screened applicants.
-                        </p>
-                      </div>
-                      <Link
-                        href="/employers/register?plan=STARTER_FREE"
-                        className="mt-4 text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1"
-                      >
-                        <span>Post a Free Job</span>
-                        <span>→</span>
-                      </Link>
-                    </div>
-
-                    {/* Middle Column: BY PRODUCTS */}
-                    <div className="col-span-4 space-y-2 text-xs">
-                      <div className="text-xs font-extrabold uppercase tracking-wider text-slate-400">
-                        By Products
-                      </div>
-                      <div className="space-y-1">
-                        <Link href="/employer/jobs/new" className="block p-1.5 rounded-lg hover:bg-slate-50">
-                          <div className="font-bold text-slate-900 text-xs">Job Posting</div>
-                          <div className="text-[11px] text-slate-500">Inbound verified applications</div>
-                        </Link>
-                        <Link href="/employers/plans" className="block p-1.5 rounded-lg hover:bg-slate-50">
-                          <div className="font-bold text-slate-900 text-xs">Resdex</div>
-                          <div className="text-[11px] text-slate-500">Search 10k+ resume database</div>
-                        </Link>
-                        <Link href="/employers" className="block p-1.5 rounded-lg hover:bg-slate-50">
-                          <div className="font-bold text-slate-900 text-xs flex items-center gap-1">
-                            <span>AI REX</span>
-                            <span className="bg-rose-500 text-white text-[8px] font-black px-1 rounded">NEW</span>
-                          </div>
-                          <div className="text-[11px] text-slate-500">Auto match & explainable score</div>
-                        </Link>
-                        <Link href="/employers" className="block p-1.5 rounded-lg hover:bg-slate-50">
-                          <div className="font-bold text-slate-900 text-xs">Employer Branding</div>
-                          <div className="text-[11px] text-slate-500">Showcase tech culture & perks</div>
-                        </Link>
-                      </div>
-                    </div>
-
-                    {/* Right Column: BY BUSINESS TYPE */}
-                    <div className="col-span-3 space-y-2 text-xs border-l border-slate-100 pl-3">
-                      <div className="text-xs font-extrabold uppercase tracking-wider text-slate-400">
-                        By Business
-                      </div>
-                      <div className="space-y-1.5 text-slate-700 font-semibold text-xs">
-                        <Link href="/employers/enterprise" className="block hover:text-blue-600 transition">
-                          Enterprises
-                        </Link>
-                        <Link href="/employers/startups" className="block hover:text-blue-600 transition">
-                          Startups & SMBs
-                        </Link>
-                        <Link href="/employers/sales" className="block hover:text-blue-600 transition">
-                          Hiring Agencies
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
+          {/* Desktop Nav or Onboarding Status */}
+          {isRegisterPage ? (
+            <div className="hidden md:flex items-center gap-2.5 pl-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-200/90 px-3 py-1 text-xs font-bold text-blue-700">
+                <ShieldCheck size={14} className="text-blue-600" />
+                <span>Enterprise Onboarding Portal</span>
+              </span>
+              <span className="text-xs font-semibold text-slate-500">
+                MCA & GSTIN Verified Registration
+              </span>
             </div>
-
-            {/* Solutions Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setSolutionsOpen(true)}
-              onMouseLeave={() => setSolutionsOpen(false)}
-            >
-              <button
-                type="button"
-                className={`flex items-center gap-1.5 py-2 text-sm sm:text-base font-bold transition hover:text-blue-600 ${
-                  pathname.startsWith("/employers/") && !pathname.includes("/plans") ? "text-blue-600" : "text-slate-800"
-                }`}
+          ) : (
+            <nav className="hidden items-center gap-4 xl:gap-6 text-xs xl:text-sm font-bold text-slate-800 lg:flex">
+              {/* Our Offerings Mega Dropdown (Naukri Screenshot 4 Equivalent) */}
+              <div
+                className="relative"
+                ref={offeringsRef}
+                onMouseEnter={() => setOfferingsOpen(true)}
+                onMouseLeave={() => setOfferingsOpen(false)}
               >
-                Solutions <ChevronDown size={16} className={`transition duration-200 ${solutionsOpen ? "rotate-180 text-blue-600" : ""}`} />
-              </button>
+                <button
+                  type="button"
+                  onClick={() => setOfferingsOpen((prev) => !prev)}
+                  className={`flex items-center gap-1.5 py-2 text-xs xl:text-sm font-bold transition hover:text-blue-600 ${
+                    offeringsOpen ? "text-blue-600" : "text-slate-800"
+                  }`}
+                >
+                  Our Offerings <ChevronDown size={16} className={`transition duration-200 ${offeringsOpen ? "rotate-180 text-blue-600" : ""}`} />
+                </button>
 
-              {solutionsOpen && (
-                <div className="absolute left-0 top-full pt-2 w-84">
-                  <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-xl">
-                    <div className="px-3 py-1.5 text-xs font-extrabold uppercase tracking-wider text-slate-400">
-                      Industry Solutions
-                    </div>
-                    {industries.map((ind) => {
-                      const Icon = ind.icon;
-                      return (
-                        <Link
-                          key={ind.slug}
-                          href={`/employers/${ind.slug}`}
-                          className="flex items-start gap-3 rounded-xl p-2.5 transition hover:bg-slate-50"
-                        >
-                          <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
-                            <Icon size={16} />
+                {offeringsOpen && (
+                  <div className="absolute left-0 top-full pt-2 w-[560px] z-50">
+                    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl grid grid-cols-12 gap-5">
+                      {/* Left Card: Free Job Posting highlight */}
+                      <div className="col-span-5 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50/60 p-4 border border-blue-100 flex flex-col justify-between">
+                        <div>
+                          <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-700 bg-blue-100/80 px-2 py-0.5 rounded-md">
+                            Starter Privilege
                           </span>
-                          <div>
-                            <div className="text-xs font-bold text-slate-900">{ind.name}</div>
-                            <div className="text-[11px] text-slate-500 leading-snug">{ind.desc}</div>
-                          </div>
+                          <h4 className="mt-2 font-display text-sm font-bold text-slate-900 leading-snug">
+                            With Free Job Posting, hire local talent at zero cost
+                          </h4>
+                          <p className="mt-1.5 text-xs text-slate-500 leading-relaxed">
+                            Post verified jobs every month with up to 50 pre-screened applicants.
+                          </p>
+                        </div>
+                        <Link
+                          href="/employers/register?plan=STARTER_FREE"
+                          className="mt-4 text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                        >
+                          <span>Post a Free Job</span>
+                          <span>→</span>
                         </Link>
-                      );
-                    })}
-                    <div className="mt-1 border-t border-slate-100 pt-2">
-                      <Link
-                        href="/employers/plans"
-                        className="flex items-center justify-between rounded-xl px-3 py-2 text-xs font-bold text-blue-600 hover:bg-blue-50 transition"
-                      >
-                        <span>View All 14 Industries</span>
-                        <span className="text-[10px] font-semibold bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full">Explore</span>
-                      </Link>
+                      </div>
+
+                      {/* Middle Column: BY PRODUCTS */}
+                      <div className="col-span-4 space-y-2 text-xs">
+                        <div className="text-xs font-extrabold uppercase tracking-wider text-slate-400">
+                          By Products
+                        </div>
+                        <div className="space-y-1">
+                          <Link href="/employer/jobs/new" className="block p-1.5 rounded-lg hover:bg-slate-50">
+                            <div className="font-bold text-slate-900 text-xs">Job Posting</div>
+                            <div className="text-[11px] text-slate-500">Inbound verified applications</div>
+                          </Link>
+                          <Link href="/employers/plans" className="block p-1.5 rounded-lg hover:bg-slate-50">
+                            <div className="font-bold text-slate-900 text-xs">Resdex</div>
+                            <div className="text-[11px] text-slate-500">Search 10k+ resume database</div>
+                          </Link>
+                          <Link href="/employers" className="block p-1.5 rounded-lg hover:bg-slate-50">
+                            <div className="font-bold text-slate-900 text-xs flex items-center gap-1">
+                              <span>AI REX</span>
+                              <span className="bg-rose-500 text-white text-[8px] font-black px-1 rounded">NEW</span>
+                            </div>
+                            <div className="text-[11px] text-slate-500">Auto match & explainable score</div>
+                          </Link>
+                          <Link href="/employers" className="block p-1.5 rounded-lg hover:bg-slate-50">
+                            <div className="font-bold text-slate-900 text-xs">Employer Branding</div>
+                            <div className="text-[11px] text-slate-500">Showcase tech culture & perks</div>
+                          </Link>
+                        </div>
+                      </div>
+
+                      {/* Right Column: BY BUSINESS TYPE */}
+                      <div className="col-span-3 space-y-2 text-xs border-l border-slate-100 pl-3">
+                        <div className="text-xs font-extrabold uppercase tracking-wider text-slate-400">
+                          By Business
+                        </div>
+                        <div className="space-y-1.5 text-slate-700 font-semibold text-xs">
+                          <Link href="/employers/enterprise" className="block hover:text-blue-600 transition">
+                            Enterprises
+                          </Link>
+                          <Link href="/employers/startups" className="block hover:text-blue-600 transition">
+                            Startups & SMBs
+                          </Link>
+                          <Link href="/employers/sales" className="block hover:text-blue-600 transition">
+                            Hiring Agencies
+                          </Link>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
 
-            <Link
-              href="/employers/it-software"
-              className={`text-sm sm:text-base font-bold transition hover:text-blue-600 ${
-                pathname === "/employers/it-software" ? "text-blue-600 font-extrabold" : "text-slate-800"
-              }`}
-            >
-              For IT & Tech
-            </Link>
+              {/* Solutions Dropdown */}
+              <div
+                className="relative"
+                ref={solutionsRef}
+                onMouseEnter={() => setSolutionsOpen(true)}
+                onMouseLeave={() => setSolutionsOpen(false)}
+              >
+                <button
+                  type="button"
+                  onClick={() => setSolutionsOpen((prev) => !prev)}
+                  className={`flex items-center gap-1.5 py-2 text-xs xl:text-sm font-bold transition hover:text-blue-600 ${
+                    industries.some((ind) => pathname === `/employers/${ind.slug}`) || pathname === "/employers/it-software"
+                      ? "text-blue-600"
+                      : "text-slate-800"
+                  }`}
+                >
+                  Solutions <ChevronDown size={16} className={`transition duration-200 ${solutionsOpen ? "rotate-180 text-blue-600" : ""}`} />
+                </button>
 
-            <Link
-              href="/employers/plans"
-              className={`text-sm sm:text-base font-bold transition hover:text-blue-600 ${
-                pathname === "/employers/plans" ? "text-blue-600 font-extrabold" : "text-slate-800"
-              }`}
-            >
-              Pricing & Plans
-            </Link>
+                {solutionsOpen && (
+                  <div className="absolute left-0 top-full pt-2 w-80 z-50">
+                    <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-xl">
+                      <div className="px-3 py-1.5 text-xs font-extrabold uppercase tracking-wider text-slate-400">
+                        Industry Solutions
+                      </div>
+                      {industries.map((ind) => {
+                        const Icon = ind.icon;
+                        return (
+                          <Link
+                            key={ind.slug}
+                            href={`/employers/${ind.slug}`}
+                            className="flex items-start gap-3 rounded-xl p-2.5 transition hover:bg-slate-50"
+                          >
+                            <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+                              <Icon size={16} />
+                            </span>
+                            <div>
+                              <div className="text-xs font-bold text-slate-900">{ind.name}</div>
+                              <div className="text-[11px] text-slate-500 leading-snug">{ind.desc}</div>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                      <div className="mt-1 border-t border-slate-100 pt-2">
+                        <Link
+                          href="/employers/plans"
+                          className="flex items-center justify-between rounded-xl px-3 py-2 text-xs font-bold text-blue-600 hover:bg-blue-50 transition"
+                        >
+                          <span>View All 14 Industries</span>
+                          <span className="text-[10px] font-semibold bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full">Explore</span>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
 
-            <Link
-              href="/employers/contact-sales"
-              className={`text-sm sm:text-base font-bold transition hover:text-blue-600 ${
-                pathname === "/employers/contact-sales" ? "text-blue-600 font-extrabold" : "text-slate-800"
-              }`}
-            >
-              Enterprise Sales
-            </Link>
-          </nav>
+              <Link
+                href="/employers/it-software"
+                className={`text-xs xl:text-sm font-bold transition hover:text-blue-600 ${
+                  pathname === "/employers/it-software" ? "text-blue-600 font-extrabold" : "text-slate-800"
+                }`}
+              >
+                For IT & Tech
+              </Link>
+
+              <Link
+                href="/employers/plans"
+                className={`text-xs xl:text-sm font-bold transition hover:text-blue-600 ${
+                  pathname === "/employers/plans" ? "text-blue-600 font-extrabold" : "text-slate-800"
+                }`}
+              >
+                Pricing & Plans
+              </Link>
+
+              <Link
+                href="/employers/contact-sales"
+                className={`text-xs xl:text-sm font-bold transition hover:text-blue-600 ${
+                  pathname === "/employers/contact-sales" ? "text-blue-600 font-extrabold" : "text-slate-800"
+                }`}
+              >
+                Enterprise Sales
+              </Link>
+            </nav>
+          )}
         </div>
 
         {/* Action CTAs */}
@@ -397,6 +447,22 @@ export default function EmployerHeader() {
                 )}
               </div>
             </>
+          ) : isRegisterPage ? (
+            <>
+              <Link
+                href="/employers/contact-sales"
+                className="hidden sm:inline-flex text-xs font-bold text-slate-600 hover:text-blue-600 px-3 py-2 rounded-xl hover:bg-slate-100 transition"
+              >
+                Need Help?
+              </Link>
+              <Link
+                href="/employer/login"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 px-3.5 py-2 rounded-xl hover:bg-blue-100 transition shadow-2xs"
+              >
+                <ShieldCheck size={15} className="text-blue-600" />
+                <span>Staff Login</span>
+              </Link>
+            </>
           ) : (
             <>
               <Link
@@ -416,23 +482,27 @@ export default function EmployerHeader() {
             </>
           )}
 
-          <Link
-            href="/employer/jobs/new"
-            className="rounded-xl bg-blue-600 px-3.5 sm:px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-700 active:scale-98 transition flex items-center gap-1.5"
-          >
-            <Briefcase size={14} />
-            <span>Post a Job</span>
-          </Link>
+          {!isRegisterPage && (
+            <Link
+              href="/employer/jobs/new"
+              className="rounded-xl bg-blue-600 px-3.5 sm:px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-700 active:scale-98 transition flex items-center gap-1.5"
+            >
+              <Briefcase size={14} />
+              <span>Post a Job</span>
+            </Link>
+          )}
 
           {/* Mobile Menu Button */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 text-slate-600 hover:text-slate-900 rounded-xl hover:bg-slate-100 transition"
-            aria-label="Toggle Menu"
-          >
-            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          {!isRegisterPage && (
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2 text-slate-600 hover:text-slate-900 rounded-xl hover:bg-slate-100 transition"
+              aria-label="Toggle Menu"
+            >
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          )}
         </div>
       </div>
 
