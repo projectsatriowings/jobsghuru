@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { Flame, Database } from "lucide-react";
+import BrandLogo from "@/components/BrandLogo";
 
 export default function EmployerHeader() {
   const pathname = usePathname();
@@ -126,37 +127,10 @@ export default function EmployerHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/90 bg-white/95 backdrop-blur-md shadow-xs">
-      <div className="container-x h-20 flex items-center justify-between gap-4">
+      <div className="container-x h-20 sm:h-22 flex items-center justify-between gap-4">
         {/* Brand Logo */}
         <div className="flex items-center gap-6">
-          <Link
-            href="/employers"
-            className="group flex items-center gap-3 font-display transition shrink-0"
-          >
-            <span className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md transition duration-200 group-hover:bg-blue-700 group-hover:scale-105">
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-white"
-              >
-                <path d="M3 13C6 7.5 18 7.5 21 13" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
-                <rect x="5.5" y="12" width="2.5" height="7.5" rx="1.2" fill="white" />
-                <rect x="10.75" y="8" width="2.5" height="11.5" rx="1.2" fill="white" />
-                <rect x="16" y="12" width="2.5" height="7.5" rx="1.2" fill="white" />
-              </svg>
-            </span>
-            <div className="flex flex-col">
-              <span className="font-display text-2xl sm:text-3xl font-black tracking-tight text-slate-900 leading-tight">
-                Jobs<span className="text-blue-600">Ghuru</span>
-              </span>
-              <span className="text-[11px] font-extrabold uppercase tracking-wider text-blue-700 leading-none">
-                Employer Platform
-              </span>
-            </div>
-          </Link>
+          <BrandLogo href="/employers" size="lg" subtitle="Employer Platform" priority />
 
           {/* Desktop Nav or Onboarding Status */}
           {isRegisterPage ? (

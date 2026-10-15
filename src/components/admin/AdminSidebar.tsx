@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -180,16 +181,22 @@ export default function AdminSidebar({
         } ${isDesktopCollapsed ? "w-72 lg:w-20" : "w-72"}`}
       >
         {/* Brand Header */}
-        <div className="flex h-16 items-center justify-between border-b border-slate-800/80 px-4 sm:px-5 bg-white/[0.02]">
+        <div className="flex h-18 items-center justify-between border-b border-slate-800/80 px-4 sm:px-5 bg-white/[0.02]">
           <Link href="/admin/dashboard" className="flex items-center gap-3 group shrink-0">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 text-white shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform">
-              <Shield size={19} />
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-900 border border-slate-700/80 overflow-hidden shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform p-1">
+              <Image
+                src="/images/logo-icon-transparent.png"
+                alt="JobsGhuru"
+                width={34}
+                height={34}
+                className="object-contain"
+              />
             </span>
             <div className={`${isDesktopCollapsed ? "lg:hidden" : "block"}`}>
-              <span className="font-display text-base font-extrabold tracking-tight text-white flex items-center gap-1">
+              <span className="font-display text-lg font-black tracking-tight text-white flex items-center gap-1">
                 Jobs<span className="text-blue-400">Ghuru</span>
               </span>
-              <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">
+              <span className="block text-[11px] font-bold uppercase tracking-wider text-slate-400">
                 ENTERPRISE ADMIN
               </span>
             </div>

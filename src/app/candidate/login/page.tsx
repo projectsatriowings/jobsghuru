@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import BrandLogo from "@/components/BrandLogo";
 import {
   Briefcase,
   Mail,
@@ -88,12 +89,7 @@ export default function CandidateLoginPage() {
         {/* LEFT COLUMN: Candidate Brand Showcase */}
         <div className="lg:col-span-5 bg-gradient-to-b from-[#F0F6FF] via-[#EBF3FE] to-[#E3EEFB] p-8 sm:p-10 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-blue-100">
           <div>
-            <Link href="/" className="inline-flex items-center gap-2.5 font-display text-xl font-extrabold text-slate-900 group">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-xs group-hover:scale-105 transition">
-                <Briefcase size={18} />
-              </span>
-              <span>Jobs<span className="text-blue-600">Guru</span></span>
-            </Link>
+            <BrandLogo href="/" size="lg" priority />
 
             <div className="mt-8">
               <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-100/80 px-3 py-1 rounded-full">

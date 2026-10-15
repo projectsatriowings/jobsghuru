@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import BrandLogo from "@/components/BrandLogo";
 import { Briefcase, ShieldCheck, Mail, Lock, User, Building, CheckCircle2, AlertCircle, ArrowRight } from "lucide-react";
 
 export default function SignupPage() {
@@ -53,12 +54,7 @@ export default function SignupPage() {
       <div className="w-full max-w-md">
         {/* Brand Logo Header */}
         <div className="text-center">
-          <Link href="/" className="inline-flex items-center gap-2.5 font-display text-xl font-bold text-slate-900">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-slate-900 text-white shadow-xs">
-              <Briefcase size={18} />
-            </span>
-            <span>Jobs<span className="text-blue-600">Guru</span></span>
-          </Link>
+          <BrandLogo href="/" size="lg" priority />
           <h1 className="mt-4 font-display text-2xl font-extrabold text-slate-900">Create Your Account</h1>
           <p className="mt-1 text-xs text-slate-500">
             {role === "candidate"

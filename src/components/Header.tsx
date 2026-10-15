@@ -18,6 +18,7 @@ import {
 import { useState, useEffect, useRef } from "react";
 import NotificationBell from "@/components/notifications/NotificationBell";
 import EmployerHeader from "@/components/employer/EmployerHeader";
+import BrandLogo from "@/components/BrandLogo";
 
 export default function Header() {
   const pathname = usePathname();
@@ -108,40 +109,10 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/90 bg-white/95 backdrop-blur-md shadow-xs transition-all">
-      <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-8 xl:px-10 h-16 sm:h-20 flex items-center justify-between gap-4 sm:gap-6">
+      <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-8 xl:px-10 h-18 sm:h-22 flex items-center justify-between gap-4 sm:gap-6">
         
         {/* Brand Logo */}
-        <Link
-          href="/"
-          onClick={handleLogoClick}
-          className="group flex items-center gap-3 font-display transition shrink-0"
-          title="JobsGhuru - Return to Home"
-          aria-label="JobsGhuru Homepage"
-        >
-          <span className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md transition duration-200 group-hover:bg-blue-700 group-hover:scale-105">
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="text-white"
-            >
-              <path
-                d="M3 13C6 7.5 18 7.5 21 13"
-                stroke="white"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-              />
-              <rect x="5.5" y="12" width="2.5" height="7.5" rx="1.2" fill="white" />
-              <rect x="10.75" y="8" width="2.5" height="11.5" rx="1.2" fill="white" />
-              <rect x="16" y="12" width="2.5" height="7.5" rx="1.2" fill="white" />
-            </svg>
-          </span>
-          <span className="font-display text-2xl sm:text-3xl font-black tracking-tight text-slate-900">
-            Jobs<span className="text-blue-600">Ghuru</span>
-          </span>
-        </Link>
+        <BrandLogo onClick={handleLogoClick} size="lg" priority />
 
         {/* Desktop Nav - Clear, larger font size */}
         <nav aria-label="Main" className="hidden lg:flex items-center gap-6 xl:gap-8 text-sm sm:text-base font-bold text-slate-700">

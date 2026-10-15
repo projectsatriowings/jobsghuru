@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import BrandLogo from "@/components/BrandLogo";
 import {
   Briefcase,
   User,
@@ -87,12 +88,7 @@ export default function CandidateDashboardPage() {
       <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-blue-100 shadow-xs">
         <div className="container-x h-16 flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <Link href="/" className="flex items-center gap-2.5 font-display text-lg font-extrabold text-slate-900 group">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white shadow-xs group-hover:scale-105 transition">
-                <Briefcase size={16} />
-              </span>
-              <span>Jobs<span className="text-blue-600">Guru</span></span>
-            </Link>
+            <BrandLogo href="/" size="md" />
 
             <nav className="hidden md:flex items-center gap-1 text-xs font-bold text-slate-600">
               <Link

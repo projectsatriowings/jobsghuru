@@ -8,7 +8,7 @@ import { checkRateLimit, resetRateLimit } from "@/lib/auth/rateLimit";
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, password, twoFactorCode } = await req.json();
+    const { email, password, twoFactorCode } = await req.json().catch(() => ({}));
 
     if (!email || !password) {
       return NextResponse.json(

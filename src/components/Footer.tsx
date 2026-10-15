@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import BrandLogo from "@/components/BrandLogo";
 import {
   Briefcase,
   ShieldCheck,
@@ -73,17 +74,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-6 gap-8 lg:gap-12 pb-12 border-b border-slate-800/80">
           {/* Brand Info (Col 1 & 2) */}
           <div className="col-span-2 space-y-4">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2.5 font-display text-2xl font-extrabold text-white group"
-            >
-              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 text-white shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform">
-                <Briefcase size={20} />
-              </span>
-              <span>
-                Jobs<span className="text-blue-400">Guru</span>
-              </span>
-            </Link>
+            <BrandLogo href="/" size="lg" theme="dark" />
 
             <p className="text-xs leading-relaxed text-slate-400 max-w-sm font-medium">
               India&apos;s transparent career and recruitment operating system with 100% verified employers, upfront salary disclosures, and zero ghost listings.

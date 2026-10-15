@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import BrandLogo from "@/components/BrandLogo";
 import {
   ShieldCheck,
   Award,
@@ -95,20 +96,7 @@ export default function EmployerFooter() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 py-10 border-b border-slate-800/80">
           {/* Brand Info */}
           <div className="col-span-2 space-y-3">
-            <Link
-              href="/employers"
-              className="inline-flex items-center gap-2.5 font-display text-xl font-extrabold text-white group"
-            >
-              <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 text-white shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform">
-                <Briefcase size={18} />
-              </span>
-              <span>
-                Jobs<span className="text-blue-400">Guru</span>
-              </span>
-              <span className="rounded-md bg-blue-500/20 px-2 py-0.5 text-[10px] font-extrabold text-blue-300 border border-blue-400/30">
-                HIRING OS
-              </span>
-            </Link>
+            <BrandLogo href="/employers" size="md" theme="dark" subtitle="HIRING OS" />
 
             <p className="text-xs leading-relaxed text-slate-400 max-w-sm font-medium">
               The hiring operating system connecting vetted organizations with verified talent through skill matching and collaborative recruitment workflows.

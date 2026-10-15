@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import BrandLogo from "@/components/BrandLogo";
 import {
   LayoutDashboard,
   Briefcase,
@@ -187,23 +188,7 @@ export default function EmployerLayout({ children }: { children: React.ReactNode
       >
         {/* Brand Header */}
         <div className="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between">
-          <Link href="/employer/dashboard" className="flex items-center gap-3 group">
-            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-tr from-blue-600 via-blue-700 to-indigo-600 text-white shadow-md shadow-blue-600/25 transition-transform group-hover:scale-105">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 13C6 7.5 18 7.5 21 13" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
-                <rect x="5.5" y="12" width="2.5" height="7.5" rx="1.2" fill="white" />
-                <rect x="10.75" y="8" width="2.5" height="11.5" rx="1.2" fill="white" />
-                <rect x="16" y="12" width="2.5" height="7.5" rx="1.2" fill="white" />
-              </svg>
-            </span>
-            <div className="flex flex-col">
-              <span className="font-display text-base font-extrabold text-slate-900 tracking-tight leading-tight">JobsGhuru</span>
-              <span className="flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider text-blue-700 leading-none mt-0.5">
-                <Sparkles size={10} className="text-blue-600 fill-blue-600" />
-                HIRING OS
-              </span>
-            </div>
-          </Link>
+          <BrandLogo href="/employer/dashboard" size="md" subtitle="HIRING OS" priority />
 
           {/* Close mobile sidebar */}
           <button

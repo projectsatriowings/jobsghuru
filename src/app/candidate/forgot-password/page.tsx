@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import BrandLogo from "@/components/BrandLogo";
 import { Briefcase, Mail, ArrowRight, AlertCircle, CheckCircle2, ArrowLeft } from "lucide-react";
 
 export default function CandidateForgotPasswordPage() {
@@ -40,12 +41,7 @@ export default function CandidateForgotPasswordPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F4F8FC] via-[#EEF5FC] to-[#E6F0FA] py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
       <div className="w-full max-w-md bg-white rounded-3xl shadow-xl shadow-blue-950/5 border border-blue-100 p-8 sm:p-10">
-        <Link href="/" className="inline-flex items-center gap-2 font-display text-xl font-extrabold text-slate-900 mb-6">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-xs">
-            <Briefcase size={18} />
-          </span>
-          <span>Jobs<span className="text-blue-600">Guru</span></span>
-        </Link>
+        <BrandLogo href="/" size="lg" className="mb-6" priority />
 
         {submitted ? (
           <div className="text-center py-4">

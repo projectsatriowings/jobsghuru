@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import BrandLogo from "@/components/BrandLogo";
 import { Briefcase, Lock, Eye, EyeOff, CheckCircle2, AlertCircle, ArrowRight, ShieldCheck } from "lucide-react";
 
 function ResetPasswordForm() {
@@ -78,12 +79,7 @@ function ResetPasswordForm() {
     <div className="min-h-screen bg-gradient-to-br from-[#F4F8FC] via-[#EEF5FC] to-[#E6F0FA] py-14 px-4 flex items-center justify-center">
       <div className="w-full max-w-md bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-blue-100">
         <div className="text-center">
-          <Link href="/" className="inline-flex items-center gap-2 font-display text-xl font-extrabold text-slate-900">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-xs">
-              <Briefcase size={18} />
-            </span>
-            <span>Jobs<span className="text-blue-600">Guru</span></span>
-          </Link>
+          <BrandLogo href="/" size="lg" priority />
           <h1 className="mt-5 text-2xl font-extrabold text-slate-900 tracking-tight">Set New Password</h1>
           <p className="mt-1.5 text-xs text-slate-500 leading-relaxed">
             Create a strong new password for your account (<strong>{email || "your account"}</strong>).

@@ -3,6 +3,7 @@
 import { useState, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ShieldCheck,
   Lock,
@@ -77,8 +78,15 @@ function AdminLoginForm() {
           <div className="text-center flex flex-col items-center space-y-3">
             <div className="relative">
               <div className="absolute -inset-1 rounded-2xl bg-blue-500/30 blur-md" />
-              <div className="relative inline-flex h-13 w-13 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-lg shadow-blue-500/30 border border-blue-400/30">
-                <ShieldCheck size={26} />
+              <div className="relative inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-lg shadow-blue-500/30 border border-slate-700/80 p-2 overflow-hidden">
+                <Image
+                  src="/images/logo-icon-transparent.png"
+                  alt="JobsGhuru"
+                  width={42}
+                  height={42}
+                  className="object-contain"
+                  priority
+                />
               </div>
             </div>
 
